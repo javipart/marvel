@@ -18,7 +18,9 @@
   width: 100%;
   z-index: 99;  
 }
-
+.Mui-selected {
+  color: white;
+}
 .App-link {
   color: #61dafb;
 }

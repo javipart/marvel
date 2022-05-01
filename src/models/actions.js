@@ -1,3 +1,11 @@
 export default {
-  
+  TOPIC: {
+    SET_TOPIC: 'SET_TOPIC',
+    LOADING: 'LOADING_DATA_TOPIC',
+    SET_DATA_TOPIC: 'SET_DATA_TOPIC',
+    SET_TOPIC_PAGE: 'SET_TOPIC_PAGE',
+  },
+  SEARCH: {
+    SET_SEARCH: 'SET_SEARCH',
+  }
 };

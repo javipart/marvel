@@ -7,15 +7,17 @@ import {
   Toolbar,
   Typography,
   InputBase,
+  Stack,
+  Pagination,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.common.black, 0.15),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.black, 0.25),
   },
   marginLeft: 0,
   width: '100%',
@@ -33,10 +35,11 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  color: 'black'
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
+  color: 'black',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -52,19 +55,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const NavBar = () => {
+const TopicSearch = ({ maxPage, page, handlePage, handleSearch, value }) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='static' sx={{ backgroundColor: 'transparent' }}>
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
-            <Typography
-              noWrap
-              component='div'
-            >
-              <img src='/logo.svg' alt='Marvel' className='App-logo' />
-            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar…"
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={handleSearch}
+                value={value}
+              />
+            </Search>
+            <Stack spacing={1}>
+              <Pagination count={maxPage} page={page} onChange={handlePage} boundaryCount={2} />
+            </Stack>
           </Toolbar>
         </Container>
       </AppBar>
@@ -72,4 +83,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar;
+export default TopicSearch;
