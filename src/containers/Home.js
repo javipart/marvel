@@ -1,10 +1,11 @@
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Box, Container, LinearProgress, Paper, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { getDataTopic, setTopic, setTopicPage, topics } from '../actions/topicActions';
+import { getDataTopic, setTopic, setTopicPage, showDataDetails } from '../actions/topicActions';
 import GridItems from '../components/Items/GridItems';
 import TopicSearch from '../components/TopicSearch/TopicSearch';
 import { setSearch } from '../actions/searchActions';
+import Details from '../components/Modal/Details';
 
 const titleTopics = ['Personajes', 'Comics', 'Series', 'Historias'];
 
@@ -33,8 +34,12 @@ const Home = () => {
     dispatch(setSearch(value));
   };
 
+  const handleDetails = (data) => {
+    dispatch(showDataDetails(data));
+  };
+
   return (
-    <Paper elevation={1} sx={{ margin: 2, height: '700px' }}>
+    <Paper elevation={6} sx={{ margin: 2, height: '700px' }}>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
@@ -70,6 +75,7 @@ const Home = () => {
           <Container fixed sx={{ maxHeight: 570, overflow: 'auto', marginTop: 2 }}>
             <GridItems
               data={data.results}
+              handleDetails={handleDetails}
             />
           </Container>
         )

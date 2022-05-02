@@ -9,3 +9,10 @@ export const SERVER = 'https://gateway.marvel.com:443/v1/public/';
 export const HASH = '027ef5c26ad666797b25000b2a71eee8';
 export const TIMES_STAMP = '1';
 export const LIMIT = 20;
+
+export const sections = {
+  0: {comics: 'Comics', series: 'Series', stories: 'Historias'},
+  1: [],
+  2: [],
+  3: [],
+};

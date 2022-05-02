@@ -14,4 +14,8 @@ export default class {
     }
     return instance.get(`characters`, { params }).then(apiGetData);
   }
+  
+  static getDetails(id, variant) {
+    return instance.get(`characters/${id}/${variant}`).then(apiGetData);
+  }
 }

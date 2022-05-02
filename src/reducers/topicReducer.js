@@ -2,6 +2,7 @@ import { ACTIONS, initialState } from '../models/constants';
 
 export default (state = initialState.topic, action = {}) => {
   let maxPage;
+  let get;
   switch (action.type) {
     case ACTIONS.TOPIC.SET_TOPIC:
       return { ...state, selected: action.value };
@@ -12,6 +13,15 @@ export default (state = initialState.topic, action = {}) => {
       return { ...state, data: action.data, maxPage };
     case ACTIONS.TOPIC.SET_TOPIC_PAGE:
       return { ...state, page: action.value };
+    case ACTIONS.TOPIC.SET_GET_DATA:
+      ({ get } = state);
+      get.data = action.data;
+      return { ...state, get };
+    case ACTIONS.TOPIC.SET_DATA_DETAILS:
+      ({ get } = state);
+      get.details = action.data;
+      console.log(get);
+      return { ...state, get };
     default:
       return state;
   }

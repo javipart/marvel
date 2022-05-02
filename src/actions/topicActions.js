@@ -4,15 +4,17 @@ import charactersApi from '../api/characters';
 import comicsApi from '../api/comics';
 import seriesApi from '../api/series';
 import storiesApi from '../api/stories';
+import { showModal } from './modalsActions';
+import Details from '../components/Modal/Details';
 
 const setTopicSuccess = value => ({ type: ACTIONS.TOPIC.SET_TOPIC, value });
 const setDataTopicSuccess = data => ({ type: ACTIONS.TOPIC.SET_DATA_TOPIC, data });
 const setLoadingDataTopic = value => ({ type: ACTIONS.TOPIC.LOADING, value });
 const setTopicPageSuccess = value => ({ type: ACTIONS.TOPIC.SET_TOPIC_PAGE, value });
+const setGetDataSuccess = data => ({ type: ACTIONS.TOPIC.SET_GET_DATA, data });
+const setGetDataDetailsSuccess = data => ({ type: ACTIONS.TOPIC.SET_DATA_DETAILS, data });
 
-const getData = (dispatch, topic, search) => {
-  const { selected, page } = topic;
-  const { value } = search;
+const getApiToUse = (selected) => {
   let apiToUse;
   switch (topics[selected]) {
     case 'characters':
@@ -28,6 +30,13 @@ const getData = (dispatch, topic, search) => {
       apiToUse = storiesApi;
       break;
   }
+  return apiToUse;
+};
+
+const getData = (dispatch, topic, search) => {
+  const { selected, page } = topic;
+  const { value } = search;
+  const apiToUse = getApiToUse(selected);
   apiToUse.get(page, value).then(res => {
     const { data, status } = res;
     if (status !== 'Ok') {
@@ -43,7 +52,7 @@ export const topics = {
   1: 'comics',
   2: 'series',
   3: 'stories',
-}
+};
 
 export function setTopic(value) {
   return (dispatch) => {
@@ -73,6 +82,33 @@ export function getDataTopic() {
     } catch (err) {
       dispatch(setLoadingDataTopic(false));
       console.log(err)
+    }
+  }
+}
+
+export function showDataDetails(data) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { topic } = state;
+    dispatch(setGetDataSuccess(data));
+    const newData = { ...data, topic: topic.selected };
+    console.log(newData)
+    dispatch(showModal(data.name || data.tittle, Details, newData));
+  }
+}
+
+export function getDataDetails(variant) {
+  return (dispatch, getState) => {
+    try {
+      const state = getState();
+      const { topic } = state;
+      const { get } = topic;
+      const { id } = get.data;
+      charactersApi.getDetails(id, variant).then(res => {
+        dispatch(setGetDataDetailsSuccess(res.data.results));
+      });
+    } catch (error) {
+
     }
   }
 }
