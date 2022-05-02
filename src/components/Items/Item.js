@@ -8,19 +8,22 @@ const Item = ({ data, handleDetails }) => {
   return (
     <Grid item>
       <Card
-        sx={{ backgroundColor: '#e5e7ef', width: 200, height: 400 }}
+        sx={{ backgroundColor: '#e5e7ef', width: 200, height: image ? 400 : 130 }}
         onClick={() => handleDetails(data)}
       >
         <CardActionArea>
-          <CardMedia
-            component='img'
-            image={image}
-            alt={title}
-            height={300}
+          {image ?
+            (<CardMedia
+              component='img'
+              image={image}
+              alt={title}
+              height={300}
 
-          />
+            />
+            )
+            : null}
           <CardContent>
-            <Typography gutterBottom variant='h5' component='div'>
+            <Typography gutterBottom variant='h7' component='div'>
               {title}
             </Typography>
           </CardContent>

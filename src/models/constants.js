@@ -12,7 +12,7 @@ export const LIMIT = 20;
 
 export const sections = {
   0: {comics: 'Comics', series: 'Series', stories: 'Historias'},
-  1: [],
-  2: [],
-  3: [],
+  1: {characters: 'Personajes', stories: 'Historias'},
+  2: {characters: 'Personajes', comics: 'Comics', stories: 'Historias'},
+  3: {characters: 'Personajes', comics: 'Comics', series: 'Series'},
 };

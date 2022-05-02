@@ -13,6 +13,7 @@ const setLoadingDataTopic = value => ({ type: ACTIONS.TOPIC.LOADING, value });
 const setTopicPageSuccess = value => ({ type: ACTIONS.TOPIC.SET_TOPIC_PAGE, value });
 const setGetDataSuccess = data => ({ type: ACTIONS.TOPIC.SET_GET_DATA, data });
 const setGetDataDetailsSuccess = data => ({ type: ACTIONS.TOPIC.SET_DATA_DETAILS, data });
+const setLoadingDataDetails = value => ({ type: ACTIONS.TOPIC.SET_LOADING_DETAILS, value })
 
 const getApiToUse = (selected) => {
   let apiToUse;
@@ -40,7 +41,7 @@ const getData = (dispatch, topic, search) => {
   apiToUse.get(page, value).then(res => {
     const { data, status } = res;
     if (status !== 'Ok') {
-      throw ('Error al consultar la API');
+      throw (new Error('Error al consultar la API'));
     }
     dispatch(setDataTopicSuccess(data));
     dispatch(setLoadingDataTopic(false));
@@ -92,8 +93,7 @@ export function showDataDetails(data) {
     const { topic } = state;
     dispatch(setGetDataSuccess(data));
     const newData = { ...data, topic: topic.selected };
-    console.log(newData)
-    dispatch(showModal(data.name || data.tittle, Details, newData));
+    dispatch(showModal(data.name || data.title, Details, newData));
   }
 }
 
@@ -104,8 +104,13 @@ export function getDataDetails(variant) {
       const { topic } = state;
       const { get } = topic;
       const { id } = get.data;
-      charactersApi.getDetails(id, variant).then(res => {
+      const apiToUse = getApiToUse(topic.selected);
+      dispatch(setLoadingDataDetails(true));
+      apiToUse.getDetails(id, variant).then(res => {
         dispatch(setGetDataDetailsSuccess(res.data.results));
+        dispatch(setLoadingDataDetails(false));
+      }).catch((err) => {
+        dispatch(setLoadingDataDetails(false));
       });
     } catch (error) {
 

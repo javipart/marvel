@@ -3,18 +3,9 @@ import Stack from '@mui/material/Stack';
 
 const BasicAlerts = ({ type, message, showAlert }) => {
   return (
-    <>
-      {
-        showAlert
-          ?
-          (
-            <Stack sx={{ width: '100%' }} spacing={2} >
-              <Alert severity={type}>{message}</Alert>
-            </Stack >
-          )
-          : null
-      }
-    </>
+    <Stack sx={{ width: '100%' }} spacing={2} >
+      <Alert severity={type}>{message}</Alert>
+    </Stack>
   );
 }
 

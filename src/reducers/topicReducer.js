@@ -20,7 +20,10 @@ export default (state = initialState.topic, action = {}) => {
     case ACTIONS.TOPIC.SET_DATA_DETAILS:
       ({ get } = state);
       get.details = action.data;
-      console.log(get);
+      return { ...state, get };
+    case ACTIONS.TOPIC.SET_LOADING_DETAILS:
+      ({ get } = state);
+      get.loading = action.value;
       return { ...state, get };
     default:
       return state;

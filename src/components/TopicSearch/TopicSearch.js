@@ -5,7 +5,6 @@ import {
   Box,
   Container,
   Toolbar,
-  Typography,
   InputBase,
   Stack,
   Pagination,

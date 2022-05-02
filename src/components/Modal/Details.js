@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ArrowForwardIosSharp, Close } from "@mui/icons-material"
-import { AppBar, Dialog, IconButton, ImageList, ImageListItem, Slide, Toolbar, Typography } from "@mui/material";
+import { ArrowForwardIosSharp } from "@mui/icons-material"
+import { Box, Card, Grid, LinearProgress, Tooltip, Typography } from "@mui/material";
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -54,7 +54,9 @@ const Details = (props) => {
   const [expanded, setExpanded] = React.useState(Object.keys(sections[props.topic])[0]);
 
   React.useEffect(() => {
-    dispatch(getDataDetails(expanded));
+    if (expanded) {
+      dispatch(getDataDetails(expanded));
+    }
   }, [expanded])
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -76,21 +78,50 @@ const Details = (props) => {
           fontSize: 30,
         }}
       >
-        <img width='40%' height='40%' src={img} />&nbsp;&nbsp;&nbsp;&nbsp;<span><h1>{title}</h1></span>
+        <img width='25%' height='25%' src={img} />&nbsp;&nbsp;&nbsp;&nbsp;<span><h1>{title}</h1></span>
       </div>
       {Object.keys(sections[props.topic]).map(item => (
         <Accordion expanded={expanded === item} onChange={handleChange(item)}>
           <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
             <Typography>{sections[props.topic][item]}</Typography>
           </AccordionSummary>
-          <AccordionDetails>
-            <ImageList sx={{height: 200}}>
-              {get.details.map(it => (
-                <ImageListItem key={it.id}>
-                  <img />
-                </ImageListItem>
-              ))}
-            </ImageList>
+          <AccordionDetails sx={{maxHeight: 150, overflowY: 'auto'}}>
+            {!get.loading
+              ? (
+                <Grid
+                  container
+                  direction='row'
+                  justifyContent='flex-start'
+                  alignItems='flex-start'
+                  spacing={1}
+                >
+                  {get.details.length ? get.details.map(it => (
+                    <Grid item key={it.id}>
+                      {it.thumbnail
+                        ? (<Tooltip title={it.name || it.title} key={it.id}>
+                          <img
+                            width='100'
+                            height='auto'
+                            src={it.thumbnail ? `${it.thumbnail.path}.${it.thumbnail.extension}` : null}
+                            alt={it.name || it.title}
+                          />
+                        </Tooltip>
+                        )
+                        : (
+                          <Card>
+                            <Typography>{title}</Typography>
+                          </Card>
+                        )}
+                    </Grid>
+                  ))
+                    : 'No hay información Disponible'}
+                </Grid>
+              )
+              : (
+                <Box sx={{ width: '100%' }}>
+                  <LinearProgress />
+                </Box>
+              )}
           </AccordionDetails>
         </Accordion>
       ))}

@@ -7,6 +7,7 @@ export default {
     get: {
       data: {},
       details: [],
+      loading: false,
     },
 
     page: 1,

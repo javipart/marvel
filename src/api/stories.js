@@ -1,5 +1,5 @@
 import { instance, apiGetData } from '.';
-import { API_KEY, HASH, LIMIT, TIMES_STAMP } from '../models/constants';
+import { LIMIT } from '../models/constants';
 
 export default class {
   static get(page) {
@@ -10,5 +10,9 @@ export default class {
       offset,
     }
     return instance.get(`stories`, { params }).then(apiGetData);
+  }
+
+  static getDetails(id, variant) {
+    return instance.get(`stories/${id}/${variant}`).then(apiGetData);
   }
 }
