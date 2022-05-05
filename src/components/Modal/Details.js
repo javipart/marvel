@@ -8,6 +8,7 @@ import { sections } from "../../models/constants";
 import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { getDataDetails } from '../../actions/topicActions';
+import PropTypes from 'prop-types';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -81,7 +82,7 @@ const Details = (props) => {
         <img width='25%' height='25%' src={img} />&nbsp;&nbsp;&nbsp;&nbsp;<span><h1>{title}</h1></span>
       </div>
       {Object.keys(sections[props.topic]).map(item => (
-        <Accordion expanded={expanded === item} onChange={handleChange(item)}>
+        <Accordion expanded={expanded === item} onChange={handleChange(item)} key={item}>
           <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
             <Typography>{sections[props.topic][item]}</Typography>
           </AccordionSummary>
@@ -108,7 +109,7 @@ const Details = (props) => {
                         </Tooltip>
                         )
                         : (
-                          <Card>
+                          <Card key={it.id}>
                             <Typography>{title}</Typography>
                           </Card>
                         )}
@@ -128,5 +129,12 @@ const Details = (props) => {
     </>
   )
 }
+
+Details.propTypes = {
+  title: PropTypes.string,
+  topic: PropTypes.number,
+  thumbnail: PropTypes.object,
+  name: PropTypes.string,
+};
 
 export default Details;

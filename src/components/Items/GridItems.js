@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import React from 'react';
 import Item from './Item';
+import PropTypes from 'prop-types';
 
 const GridItems = ({ data, handleDetails }) => {
   return (
@@ -14,6 +15,11 @@ const GridItems = ({ data, handleDetails }) => {
       ))}
     </Grid>
   );
+};
+
+GridItems.propTypes = {
+  data: PropTypes.array,
+  handleDetails: PropTypes.func,
 };
 
 export default GridItems;

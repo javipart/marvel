@@ -10,6 +10,7 @@ import {
   Pagination,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import PropTypes from 'prop-types';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -54,8 +55,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const TopicSearch = ({ maxPage, page, handlePage, handleSearch, value }) => {
-
+const TopicSearch = ({
+  maxPage, page, handlePage,
+  handleSearch, value,
+}) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static' sx={{ backgroundColor: 'transparent' }}>
@@ -81,5 +84,13 @@ const TopicSearch = ({ maxPage, page, handlePage, handleSearch, value }) => {
     </Box>
   )
 }
+
+TopicSearch.propTypes = {
+  maxPage: PropTypes.number,
+  page: PropTypes.number,
+  handlePage: PropTypes.func,
+  handleSearch: PropTypes.func,
+  value: PropTypes.string,
+};
 
 export default TopicSearch;

@@ -3,6 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { AppBar, Dialog, DialogContent, IconButton, Slide, Toolbar, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { hideModal } from '../actions/modalsActions';
+import PropTypes from 'prop-types';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -50,6 +51,13 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   hide: hideModal,
+};
+
+Modals.propTypes = {
+  show: PropTypes.bool,
+  title: PropTypes.string,
+  Component: PropTypes.func,
+  data: PropTypes.object,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modals);

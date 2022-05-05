@@ -1,5 +1,13 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import React from 'react';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from '@mui/material';
+import PropTypes from 'prop-types';
 
 const Item = ({ data, handleDetails }) => {
   const title = data.name || data.title;
@@ -31,6 +39,11 @@ const Item = ({ data, handleDetails }) => {
       </Card>
     </Grid>
   );
+};
+
+Item.propTypes = {
+  data: PropTypes.object,
+  handleDetails: PropTypes.func,
 };
 
 export default Item;
